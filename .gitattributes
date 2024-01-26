@@ -35,3 +35,4 @@
 *.otf[[:space:]]filter=lfs[[:space:]]diff=lfs[[:space:]]merge=lfs[[:space:]]-text filter=lfs diff=lfs merge=lfs -text
 *.lib[[:space:]]filter=fs[[:space:]]diff=lfs[[:space:]]merge=lfs[[:space:]]-text filter=lfs diff=lfs merge=lfs -text
 dependencies/SFML/ filter=lfs diff=lfs merge=lfs -text
+*.png[[:space:]]filter=fs[[:space:]]diff=lfs[[:space:]]merge=lfs[[:space:]]-text filter=lfs diff=lfs merge=lfs -text
