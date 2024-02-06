@@ -3,33 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include <math.h>
 
-class Enemy {
-
-private :
-	int powerr = 0;
-public:
-	int damage = 0;
-	int attackSpeed = 0;
-	int health = 0;
-	std::string firstName = "";
-	void Kill() {
-		std::cout << "TO MATANDO HAHAHHA " << std::endl;
-	}
-	void Walk() {
-		std::cout << "TO andando " << std::endl;
-	}
-	void heal() {
-		health = 10;
-		std::cout << "TO curando  " << std::endl;
-	}
-	int getpower() {
-		return powerr;
-	}
-	int setpower(int power) {
-		powerr= power;
-		return powerr;
-	}
-};
 
 sf::Vector2f NormalizeVector(sf::Vector2f vector) {
 	float m = std::sqrt(vector.x * vector.x + vector.y * vector.y
@@ -39,6 +12,8 @@ sf::Vector2f NormalizeVector(sf::Vector2f vector) {
 	NormalizedVector.y = vector.y / m;
 	return NormalizedVector;
 }
+
+
 int main() {
 	float bulletSpeed{ 0.5f };
 
@@ -47,7 +22,7 @@ int main() {
 	//settings.antialiasingLevel = 8;
 	//sf::RenderWindow window(sf::VideoMode(800, 600), "RPG GAME",sf::Style::Default, settings);
 	sf::RenderWindow window(sf::VideoMode(800, 600), "RPG GAME");
-	std::vector<sf::RectangleShape> bullets;
+	std::vector<sf::RectangleShape> bullets{};
 	//sf::RectangleShape bullet(sf::Vector2f(20, 10));
 
 
@@ -61,6 +36,8 @@ int main() {
 		int Yindex = 0;
 		enemySprite.setTextureRect(sf::IntRect(Xindex * 45, Yindex * 51, 45, 51));
 		enemySprite.scale(sf::Vector2f(2, 2));
+
+		enemySprite.setPosition(sf::Vector2f(5, 5));
 	}
 	else
 	{
@@ -126,52 +103,59 @@ int main() {
 
 				playerSprite.setPosition(postion + sf::Vector2f(0, 1));
 			}
-			//if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-			//	bullets.push_back(sf::RectangleShape(sf::Vector2f(50, 25)));
-			//	int i = bullets.size() - 1;
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 
-			//	bullets[i].setPosition(playerSprite.getPosition());
+				bullets.push_back(sf::RectangleShape(sf::Vector2f(50, 25)));
+				int i = bullets.size() - 1;
+
+				bullets[i].setPosition(playerSprite.getPosition());
 
 
-			//}
-			//for (size_t i = 0; i < bullets.size() - 1; i++) {
-
-			//	direction = enemySprite.getPosition() - bullets[i].getPosition();//calculate the direction of every single bullet  
-			//	direction = NormalizeVector(direction);
-			//	bullets[i].setPosition(bullets[i].getPosition() + direction * bulletSpeed);
-
-			//}
-			// -------------- DRAW ---------------- // 
+			}
+			for (size_t i = 0; i < bullets.size(); i++) {
+				direction = enemySprite.getPosition() - bullets[i].getPosition();//calculate the direction of every single bullet  
+				direction = NormalizeVector(direction);
+				bullets[i].setPosition(bullets[i].getPosition() + direction * bulletSpeed);
+			}
 		}
 
-		// Activate the window for OpenGL rendering
-		window.setActive();
-		window.clear(sf::Color::Blue);//limpando  a screen
-		////draw
-		//window.draw(shape);
-		//window.draw(rectangle);
-		//window.draw(square);
-		enemySprite.setPosition(sf::Vector2f(5, 5));
-		//window.draw(bullet);
-		//for (size_t i = 0; i < bullets.size() - 1; i++) {
-		//	window.draw(bullets[i]);
-		//}
-		window.draw(enemySprite);
-		window.draw(playerSprite);//nao pode dar draw em uma texture
-
-		//draw player
-		window.display(); // chamando a date q tava no back-bufffer e botando na screenb
-		// -------------- DRAW ---------------- // 
+			//for (size_t i = 0; i < bullets.size(); i++) {
+			//	sf::Vector2f direction = enemySprite.getPosition() - bullets[i].getPosition();//calculate the direction of every single bullet  
+			//		direction = NormalizeVector(direction);
+			//		bullets[i].setPosition(bullets[i].getPosition() + direction * bulletSpeed);
+		   //}
+				// -------------- DRAW ---------------- // 
 
 
+			// Activate the window for OpenGL rendering
+			window.setActive();
 
-	// etc ...
+			////draw
+			//window.draw(shape);
+			//window.draw(rectangle);
+			//window.draw(square);
 
+			//window.draw(bullet);
+
+			window.clear(sf::Color::Blue);//limpando  a screen
+			window.draw(enemySprite);
+			window.draw(playerSprite);//nao pode dar draw em uma texture
+			for (size_t i = 0; i < bullets.size(); i++) {
+				window.draw(bullets[i]);
+			}
+			window.display(); // chamando a date q tava no back-bufffer e botando na screenb
+			// -------------- DRAW ---------------- // 
+
+
+
+		// etc ...
+
+
+		
 
 	}
 	return 0;
 }
-
 			// -------------- UPDATE ---------------- // 
 
 		//Enemy Matsuda;
