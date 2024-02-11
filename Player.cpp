@@ -7,6 +7,15 @@
 
 void Player::initialize()
 {
+	boundingRectangle.setFillColor(sf::Color::Transparent);
+	boundingRectangle.setOutlineColor(sf::Color::Red);
+	boundingRectangle.setOutlineThickness(1);
+
+	size = sf::Vector2i(120, 100);
+	Sprite.scale(sf::Vector2f(2, 2));
+
+	boundingRectangle.setSize(sf::Vector2f(size.x *Sprite.getScale().x, size.y * Sprite.getScale().y));
+
 }
 
 void Player::Update(Enemy &enemy)
@@ -53,6 +62,11 @@ void Player::Update(Enemy &enemy)
 			bullets[i].setPosition(bullets[i].getPosition() + direction * bulletSpeed);
 		}
 	
+		boundingRectangle.setPosition(Sprite.getPosition());
+
+		if (maths::CheckRectColision(Sprite.getGlobalBounds(), enemy.getSSprite().getGlobalBounds())) {
+			std::cout << "colidion";
+		}
 	
 }
 
@@ -70,9 +84,8 @@ void Player::Load(){
 		int Xindex = 2;//120
 		int yindex = 2;//100
 		//X,Y,width,height
-		Sprite.setTextureRect(sf::IntRect(Xindex * 120, yindex * 100, 120, 100));
+		Sprite.setTextureRect(sf::IntRect(Xindex * size.x, yindex * size.y, 120, 100));
 		Sprite.setPosition(sf::Vector2f(400, 400));
-		Sprite.scale(sf::Vector2f(2, 2));
 	}
 	else {
 		std::cout << "Player Texture Failed.";
@@ -82,6 +95,7 @@ void Player::Load(){
 void Player::Draw(sf::RenderWindow &window)
 {
 	window.draw(Sprite);
+	window.draw(boundingRectangle);
 
 	for (size_t i = 0; i < bullets.size(); i++) {
 		window.draw(bullets[i]);

@@ -6,6 +6,9 @@ class Enemy
 private:
 	sf::Texture Texture;
 	sf::Sprite Sprite;
+	sf::RectangleShape boundingRectangle;
+	sf::Vector2i size;
+
 public:
 	void initialize();//<- called once p App Start
 	void Update();//<- called once p App start

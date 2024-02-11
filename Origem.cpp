@@ -43,6 +43,7 @@ int main() {
 		sf::Event event; // criando um objeto chamado event
 		while (window.pollEvent(event))// looping na fila de eventos (queue fila em ingles) 
 		{
+			demon.Update();
 			Myplayer.Update(demon);
 			// se o tipo for close fechar
 			if (event.type == sf::Event::Closed) {
