@@ -18,7 +18,7 @@ void Player::initialize()
 
 }
 
-void Player::Update(Enemy &enemy)
+void Player::Update(float deltaTime,Enemy &enemy)
 {
 	sf::Vector2f postion = Sprite.getPosition();
 
@@ -28,21 +28,21 @@ void Player::Update(Enemy &enemy)
 		//para ajustar o movimento bugado - multiplica a velocidade , pela difenca do frame atual pelo ultimo frame , ou seja frameatual - frameanterior , 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 
-			Sprite.setPosition(postion + sf::Vector2f(1, 0));
+			Sprite.setPosition(postion + sf::Vector2f(1, 0) * PlayerSpeed * deltaTime);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 
 
-			Sprite.setPosition(postion - sf::Vector2f(1, 0));
+			Sprite.setPosition(postion - sf::Vector2f(1, 0) * PlayerSpeed * deltaTime);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 
 
-			Sprite.setPosition(postion - sf::Vector2f(0, 1));
+			Sprite.setPosition(postion - sf::Vector2f(0, 1) * PlayerSpeed * deltaTime);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 
-			Sprite.setPosition(postion + sf::Vector2f(0, 1));
+			Sprite.setPosition(postion + sf::Vector2f(0, 1) * PlayerSpeed * deltaTime);
 		}
 
 
@@ -59,7 +59,7 @@ void Player::Update(Enemy &enemy)
 		for (size_t i = 0; i < bullets.size(); i++) {
 			sf::Vector2f direction = enemy.getSSprite().getPosition() - bullets[i].getPosition();//calculate the direction of every single bullet  
 			direction = maths::NormalizeVector(direction);
-			bullets[i].setPosition(bullets[i].getPosition() + direction * bulletSpeed);
+			bullets[i].setPosition(bullets[i].getPosition() + direction * bulletSpeed  * deltaTime);
 		}
 	
 		boundingRectangle.setPosition(Sprite.getPosition());

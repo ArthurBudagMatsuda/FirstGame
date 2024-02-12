@@ -14,6 +14,7 @@ int main() {
 	//settings.antialiasingLevel = 8;
 	//sf::RenderWindow window(sf::VideoMode(800, 600), "RPG GAME",sf::Style::Default, settings);
 	sf::RenderWindow window(sf::VideoMode(800, 600), "RPG GAME");
+	window.setFramerateLimit(60);
 	//sf::RectangleShape bullet(sf::Vector2f(20, 10));
 	//-------------INITIALIZE-----------------
 
@@ -32,19 +33,21 @@ int main() {
 	///------------------LOAD-----------------
 
 
-	
-
+	sf::Clock clock;
 
 	while (window.isOpen())
 	{
-		
+		sf::Time deltaTimeTimer = clock.restart();
+		float deltaTime = deltaTimeTimer.asMilliseconds();
+		std::cout << deltaTime << "\n";
+
 		
 		// -------------- UPDATE ---------------- // 
 		sf::Event event; // criando um objeto chamado event
 		while (window.pollEvent(event))// looping na fila de eventos (queue fila em ingles) 
 		{
-			demon.Update();
-			Myplayer.Update(demon);
+			demon.Update(deltaTime);
+			Myplayer.Update(deltaTime, demon);
 			// se o tipo for close fechar
 			if (event.type == sf::Event::Closed) {
 				window.close();
@@ -52,11 +55,11 @@ int main() {
 			}
 
 
-			//------------UPDATE--------------
+			
 		}
 
-
-		 // -------------- DRAW ---------------- // 
+		//------------UPDATE--------------		
+		//  // -------------- DRAW ---------------- // 
 
 
 			// Activate the window for OpenGL rendering
@@ -82,7 +85,7 @@ int main() {
 
 
 		
-
+	
 	}
 	return 0;
 }

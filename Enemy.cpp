@@ -12,7 +12,7 @@ void Enemy::initialize()
 	boundingRectangle.setSize(sf::Vector2f(size.x * Sprite.getScale().x, size.y * Sprite.getScale().y));
 }
 
-void Enemy::Update()
+void Enemy::Update(float deltaTime)
 {
 	boundingRectangle.setPosition(Sprite.getPosition());
 

@@ -8,6 +8,7 @@ class Player
 private : 	
 	sf::Texture PlayerTexture; 
 	sf::Sprite Sprite;
+	float PlayerSpeed = 2.0f;
 	std::vector<sf::RectangleShape> bullets{};
 	float bulletSpeed{ 0.5f };
 	sf::RectangleShape boundingRectangle;
@@ -18,7 +19,7 @@ private :
 	sf::Vector2i size;
 public:
 	void initialize();//<- called once p App Start
-	void Update(Enemy& enemy);//<- called once p App start
+	void Update(float deltaTime,Enemy& enemy);//<- called once p App start
 	sf::Sprite getSSprite();
 	void Load();//<- called once p frame
 	void Draw(sf::RenderWindow &window);//<- called once p frame
