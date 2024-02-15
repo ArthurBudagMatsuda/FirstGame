@@ -10,6 +10,8 @@ private:
 	sf::Vector2i size;
 
 public:
+	Enemy();
+	~Enemy();
 	void initialize();//<- called once p App Start
 	void Update(float deltaTime);//<- called once p App start
 	sf::Sprite getSSprite();

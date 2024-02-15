@@ -4,6 +4,7 @@
 #include <math.h>
 #include "Player.h"
 #include"Enemy.h"
+#include "FrameText.h";
 
 
 int main() {
@@ -18,8 +19,9 @@ int main() {
 	//sf::RectangleShape bullet(sf::Vector2f(20, 10));
 	//-------------INITIALIZE-----------------
 
+	FrameText frameRate;
+	frameRate.Initialize();
 
-	
 	Player Myplayer;
 	Enemy demon;
 	
@@ -28,18 +30,16 @@ int main() {
 	///------------------LOAD-----------------
 	Myplayer.Load();
 	demon.Load();
-
+	frameRate.Load();
 
 	///------------------LOAD-----------------
 
-
+	sf::Time deltaTimeTimer;
 	sf::Clock clock;
-
+	double deltaTime = 0;
 	while (window.isOpen())
 	{
-		sf::Time deltaTimeTimer = clock.restart();
-		float deltaTime = deltaTimeTimer.asMilliseconds();
-		std::cout << deltaTime << "\n";
+
 
 		
 		// -------------- UPDATE ---------------- // 
@@ -58,6 +58,9 @@ int main() {
 			
 		}
 
+		clock.restart();
+		 deltaTime = deltaTimeTimer.asMilliseconds();
+		frameRate.Update(deltaTime);
 		//------------UPDATE--------------		
 		//  // -------------- DRAW ---------------- // 
 
@@ -74,12 +77,13 @@ int main() {
 
 			window.clear(sf::Color::Blue);//limpando  a screen
 			demon.Draw(window);
-			
+			frameRate.Draw(window);
 			Myplayer.Draw(window);
+
 			//window.draw(playerSprite);//nao pode dar draw em uma texture
 
 			window.display(); // chamando a date q tava no back-bufffer e botando na screenb
-
+			deltaTimeTimer = clock.getElapsedTime();
 		// -------------- DRAW ---------------- // 
 
 

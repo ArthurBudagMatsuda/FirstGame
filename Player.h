@@ -9,8 +9,11 @@ private :
 	sf::Texture PlayerTexture; 
 	sf::Sprite Sprite;
 	float PlayerSpeed = 2.0f;
+
 	std::vector<sf::RectangleShape> bullets{};
 	float bulletSpeed{ 0.5f };
+	float maxFireRate;
+	float fireRateTimer;
 	sf::RectangleShape boundingRectangle;
 	// static antes na da variavel ou da funcao faz ela ser '' global''' e tbm ela nao precisa criar uma instancia da classe para usar tipo eu nao preciso criar um Player player p usar
 	// uma funcao , e bom pq tipo se eu decclaro uuma funcao static , todos os player irao utilizar a mesma date dessa funcao assim otimizando um poco
@@ -18,6 +21,8 @@ private :
 	float height = 100;
 	sf::Vector2i size;
 public:
+	Player();
+	~Player();
 	void initialize();//<- called once p App Start
 	void Update(float deltaTime,Enemy& enemy);//<- called once p App start
 	sf::Sprite getSSprite();

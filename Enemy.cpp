@@ -1,5 +1,11 @@
 #include "Enemy.h"
 #include <iostream>
+Enemy::Enemy()
+{
+}
+Enemy::~Enemy()
+{
+}
 void Enemy::initialize()
 {
 	boundingRectangle.setFillColor(sf::Color::Transparent);

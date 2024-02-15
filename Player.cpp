@@ -5,6 +5,14 @@
 #include "Maths.h"
 
 
+Player::Player() :bulletSpeed(0.5f), PlayerSpeed(1.0f), maxFireRate(1000), fireRateTimer(0)
+{
+}
+
+Player::~Player()
+{
+}
+
 void Player::initialize()
 {
 	boundingRectangle.setFillColor(sf::Color::Transparent);
@@ -46,15 +54,15 @@ void Player::Update(float deltaTime,Enemy &enemy)
 		}
 
 
-
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+		fireRateTimer += deltaTime;
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && fireRateTimer >= maxFireRate) {
 
 			bullets.push_back(sf::RectangleShape(sf::Vector2f(50, 25)));
 			int i = bullets.size() - 1;
 
 			bullets[i].setPosition(Sprite.getPosition());
 
-
+			fireRateTimer = 0;//mution -1 noob
 		}
 		for (size_t i = 0; i < bullets.size(); i++) {
 			sf::Vector2f direction = enemy.getSSprite().getPosition() - bullets[i].getPosition();//calculate the direction of every single bullet  
@@ -62,8 +70,8 @@ void Player::Update(float deltaTime,Enemy &enemy)
 			bullets[i].setPosition(bullets[i].getPosition() + direction * bulletSpeed  * deltaTime);
 		}
 	
-		boundingRectangle.setPosition(Sprite.getPosition());
 
+		boundingRectangle.setPosition(Sprite.getPosition());
 		if (maths::CheckRectColision(Sprite.getGlobalBounds(), enemy.getSSprite().getGlobalBounds())) {
 			std::cout << "colidion";
 		}
