@@ -1,6 +1,6 @@
 #include "Enemy.h"
 #include <iostream>
-Enemy::Enemy()
+Enemy::Enemy() : health(100)
 {
 }
 Enemy::~Enemy()
@@ -20,7 +20,12 @@ void Enemy::initialize()
 
 void Enemy::Update(float deltaTime)
 {
-	boundingRectangle.setPosition(Sprite.getPosition());
+	if (health > 0) {
+		boundingRectangle.setPosition(Sprite.getPosition());
+		healthText.setPosition(Sprite.getPosition());
+	}
+
+
 
 }
 
@@ -34,7 +39,7 @@ void Enemy::Load()
 	if (Texture.loadFromFile("assets/player/texture/SpriteSheets.png")) {//fazer uma classe load game para dar load em tudo 
 		std::cout << "Enemy Texture Loaded.";
 		Sprite.setTexture(Texture);
-
+		healthText.setPosition(Sprite.getPosition());
 		int Xindex = 2;//120
 		int yindex = 2;//100
 		//X,Y,width,height
@@ -48,11 +53,40 @@ void Enemy::Load()
 		std::cout << "Enemy Texture Failed.";
 	}
 
+	if (font.loadFromFile("assets/fonts/Arial.ttf")) {
+		std::cout << "Arial Font loaded" << "\n";
+
+		healthText.setFont(font);
+		healthText.setCharacterSize(24);
+		healthText.setFillColor(sf::Color::Red);
+	}
+	else
+	{
+		std::cout << "Font Loaded Failed" << "\n";
+	};
+
+
 }
 
 void Enemy::Draw(sf::RenderWindow& window)
 {
-	window.draw(boundingRectangle);
-	 window.draw(Sprite);
+	if (health > 0) {
+		window.draw(boundingRectangle);
+		window.draw(Sprite);
+		window.draw(healthText);
+	}
+
+}
+
+int Enemy::getHealth()
+{
+	return health;
+}
+
+int Enemy::setHealth(int x)
+{
+
+	healthText.setString(std::to_string(health));
+	return 	health = x;
 }
 

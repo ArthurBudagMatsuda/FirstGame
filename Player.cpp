@@ -5,7 +5,7 @@
 #include "Maths.h"
 
 
-Player::Player() :bulletSpeed(0.5f), PlayerSpeed(1.0f), maxFireRate(1000), fireRateTimer(0)
+Player::Player() :PlayerSpeed(1.0f), maxFireRate(500), fireRateTimer(0)
 {
 }
 
@@ -25,8 +25,23 @@ void Player::initialize()
 	boundingRectangle.setSize(sf::Vector2f(size.x *Sprite.getScale().x, size.y * Sprite.getScale().y));
 
 }
+void Player::Load() {
+	if (PlayerTexture.loadFromFile("assets/player/texture/SpriteSheets.png")) {//fazer uma classe load game para dar load em tudo 
+		std::cout << "Player Texture Loaded.";
+		Sprite.setTexture(PlayerTexture);
 
-void Player::Update(float deltaTime,Enemy &enemy)
+		int Xindex = 2;//120
+		int yindex = 2;//100
+		//X,Y,width,height
+		Sprite.setTextureRect(sf::IntRect(Xindex * size.x, yindex * size.y, 120, 100));
+		Sprite.setPosition(sf::Vector2f(400, 400));
+	}
+	else {
+		std::cout << "Player Texture Failed.";
+	}
+}
+
+void Player::Update(float deltaTime,Enemy &enemy, sf::Vector2i& mousePosition)
 {
 	sf::Vector2f postion = Sprite.getPosition();
 
@@ -57,24 +72,34 @@ void Player::Update(float deltaTime,Enemy &enemy)
 		fireRateTimer += deltaTime;
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && fireRateTimer >= maxFireRate) {
 
-			bullets.push_back(sf::RectangleShape(sf::Vector2f(50, 25)));
+			bullets.push_back(Bullet());
 			int i = bullets.size() - 1;
+			bullets[i].initialize(Sprite.getPosition(), sf::Vector2f(mousePosition),0.5f);
 
-			bullets[i].setPosition(Sprite.getPosition());
-
-			fireRateTimer = 0;//mution -1 noob
+			
+			fireRateTimer = 0;
 		}
 		for (size_t i = 0; i < bullets.size(); i++) {
-			sf::Vector2f direction = enemy.getSSprite().getPosition() - bullets[i].getPosition();//calculate the direction of every single bullet  
-			direction = maths::NormalizeVector(direction);
-			bullets[i].setPosition(bullets[i].getPosition() + direction * bulletSpeed  * deltaTime);
+			//sf::Vector2f direction = enemy.getSSprite().getPosition() - bullets[i].getPosition();//calculate the direction of every single bullet  
+			//sf::Vector2f direction = sf::Vector2f(mousePosition) - bullets[i].getPosition(); // aqui ele me da a direcao 
+			//                          estou enviando o mouseposition de acordo com a window, se eu pegar o mousePosition global vai bugar
+			//direction = maths::NormalizeVector(direction);// aqui eu normalizo cortando em partes menores
+			//bullets[i].setPosition(bullets[i].getPosition() + direction * bulletSpeed  * deltaTime);
+			bullets[i].Update(deltaTime);
+			if (enemy.getHealth() > 0) {
+				if (maths::CheckRectColision(bullets[i].GetGlobalBounds(), enemy.getSSprite().getGlobalBounds())) {
+					enemy.setHealth(enemy.getHealth() - 10);
+					bullets.erase(bullets.begin() + i);
+				}
+			}
+
 		}
 	
 
 		boundingRectangle.setPosition(Sprite.getPosition());
-		if (maths::CheckRectColision(Sprite.getGlobalBounds(), enemy.getSSprite().getGlobalBounds())) {
-			std::cout << "colidion";
-		}
+		//if (maths::CheckRectColision(Sprite.getGlobalBounds(), enemy.getSSprite().getGlobalBounds())) {
+		//	std::cout << "colidion";
+		//}
 	
 }
 
@@ -84,21 +109,7 @@ sf::Sprite Player::getSSprite()
 }
 
 
-void Player::Load(){
-	if (PlayerTexture.loadFromFile("assets/player/texture/SpriteSheets.png")) {//fazer uma classe load game para dar load em tudo 
-		std::cout << "Player Texture Loaded.";
-		Sprite.setTexture(PlayerTexture);
 
-		int Xindex = 2;//120
-		int yindex = 2;//100
-		//X,Y,width,height
-		Sprite.setTextureRect(sf::IntRect(Xindex * size.x, yindex * size.y, 120, 100));
-		Sprite.setPosition(sf::Vector2f(400, 400));
-	}
-	else {
-		std::cout << "Player Texture Failed.";
-	}
-}
 
 void Player::Draw(sf::RenderWindow &window)
 {
@@ -106,7 +117,7 @@ void Player::Draw(sf::RenderWindow &window)
 	window.draw(boundingRectangle);
 
 	for (size_t i = 0; i < bullets.size(); i++) {
-		window.draw(bullets[i]);
+		bullets[i].Draw(window);
 	}
 
 }

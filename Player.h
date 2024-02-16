@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Enemy.h"
-
+#include "Bullet.h"
 class Player
 {
 
@@ -10,8 +10,8 @@ private :
 	sf::Sprite Sprite;
 	float PlayerSpeed = 2.0f;
 
-	std::vector<sf::RectangleShape> bullets{};
-	float bulletSpeed{ 0.5f };
+	std::vector<Bullet> bullets;
+
 	float maxFireRate;
 	float fireRateTimer;
 	sf::RectangleShape boundingRectangle;
@@ -23,8 +23,10 @@ private :
 public:
 	Player();
 	~Player();
+
+
 	void initialize();//<- called once p App Start
-	void Update(float deltaTime,Enemy& enemy);//<- called once p App start
+	void Update(float deltaTime,Enemy& enemy,sf::Vector2i &mousePosition);//<- called once p App start
 	sf::Sprite getSSprite();
 	void Load();//<- called once p frame
 	void Draw(sf::RenderWindow &window);//<- called once p frame

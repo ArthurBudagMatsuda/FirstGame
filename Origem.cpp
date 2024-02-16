@@ -14,8 +14,8 @@ int main() {
 	//sf::ContextSettings settings;
 	//settings.antialiasingLevel = 8;
 	//sf::RenderWindow window(sf::VideoMode(800, 600), "RPG GAME",sf::Style::Default, settings);
-	sf::RenderWindow window(sf::VideoMode(800, 600), "RPG GAME");
-	window.setFramerateLimit(60);
+	sf::RenderWindow window(sf::VideoMode(1200, 1000), "RPG GAME");
+	window.setFramerateLimit(120);
 	//sf::RectangleShape bullet(sf::Vector2f(20, 10));
 	//-------------INITIALIZE-----------------
 
@@ -46,8 +46,7 @@ int main() {
 		sf::Event event; // criando um objeto chamado event
 		while (window.pollEvent(event))// looping na fila de eventos (queue fila em ingles) 
 		{
-			demon.Update(deltaTime);
-			Myplayer.Update(deltaTime, demon);
+	
 			// se o tipo for close fechar
 			if (event.type == sf::Event::Closed) {
 				window.close();
@@ -57,7 +56,9 @@ int main() {
 
 			
 		}
-
+		sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+		demon.Update(deltaTime);
+		Myplayer.Update(deltaTime, demon, mousePosition);
 		clock.restart();
 		 deltaTime = deltaTimeTimer.asMilliseconds();
 		frameRate.Update(deltaTime);

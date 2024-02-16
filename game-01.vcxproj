@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FrameText.cpp" />
     <ClCompile Include="Maths.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="randomballs.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FrameText.h" />
     <ClInclude Include="Maths.h" />

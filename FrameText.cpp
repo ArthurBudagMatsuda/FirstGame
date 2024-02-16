@@ -13,17 +13,17 @@ void FrameText::Initialize()
 
 void FrameText::Load()
 {
-	if (font.loadFromFile("assets/fonts/Arial.ttf")) {
-		std::cout << "Arial Font loaded" << "\n";
+		if (font.loadFromFile("assets/fonts/Arial.ttf")) {
+			std::cout << "Arial Font loaded" << "\n";
 
-		frameRateText.setFont(font);
-		frameRateText.setCharacterSize(24);
-		frameRateText.setFillColor(sf::Color::Red);
-	}
-	else
-	{
-		std::cout << "Font Loaded Failed" << "\n";
-	};
+			frameRateText.setFont(font);
+			frameRateText.setCharacterSize(24);
+			frameRateText.setFillColor(sf::Color::Red);
+		}
+		else
+		{
+			std::cout << "Font Loaded Failed" << "\n";
+		};
 
 }
 
