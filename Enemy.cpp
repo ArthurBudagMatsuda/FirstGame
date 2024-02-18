@@ -20,11 +20,11 @@ void Enemy::initialize()
 
 void Enemy::Update(float deltaTime)
 {
+
 	if (health > 0) {
 		boundingRectangle.setPosition(Sprite.getPosition());
 		healthText.setPosition(Sprite.getPosition());
 	}
-
 
 
 }

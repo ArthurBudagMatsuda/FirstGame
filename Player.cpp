@@ -5,7 +5,7 @@
 #include "Maths.h"
 
 
-Player::Player() :PlayerSpeed(1.0f), maxFireRate(500), fireRateTimer(0)
+Player::Player() :PlayerSpeed(1.0f), maxFireRate(500), fireRateTimer(0), municao(10), timerMunition(Inf), Inf(-69000000.0f)
 {
 }
 
@@ -23,6 +23,8 @@ void Player::initialize()
 	Sprite.scale(sf::Vector2f(2, 2));
 
 	boundingRectangle.setSize(sf::Vector2f(size.x *Sprite.getScale().x, size.y * Sprite.getScale().y));
+	MunitionText.setPosition(Sprite.getPosition());
+	//Sprite.setOrigin(sf::Vector2f(60,50));
 
 }
 void Player::Load() {
@@ -39,10 +41,24 @@ void Player::Load() {
 	else {
 		std::cout << "Player Texture Failed.";
 	}
+
+	if (font.loadFromFile("assets/fonts/Arial.ttf")) {
+		std::cout << "Arial Font loaded" << "\n";
+
+		MunitionText.setFont(font);
+		MunitionText.setCharacterSize(24);
+		MunitionText.setFillColor(sf::Color::Red);
+	}
+	else
+	{
+		std::cout << "Font Loaded Failed" << "\n";
+	};
+	
 }
 
-void Player::Update(float deltaTime,Enemy &enemy, sf::Vector2i& mousePosition)
+void Player::Update(float deltaTime,Enemy &enemy, sf::Vector2i& mousePosition )
 {
+
 	sf::Vector2f postion = Sprite.getPosition();
 
 	
@@ -67,17 +83,26 @@ void Player::Update(float deltaTime,Enemy &enemy, sf::Vector2i& mousePosition)
 
 			Sprite.setPosition(postion + sf::Vector2f(0, 1) * PlayerSpeed * deltaTime);
 		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+			timerMunition = 0.0f;
+			
+		}
+		timerMunition += deltaTime;
+		if (timerMunition > 1000.0f) {
+			municao = 10;
+			timerMunition = Inf;
+		}
 
 
 		fireRateTimer += deltaTime;
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && fireRateTimer >= maxFireRate) {
-
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && fireRateTimer >= maxFireRate && municao > 0) {
+		
 			bullets.push_back(Bullet());
 			int i = bullets.size() - 1;
-			bullets[i].initialize(Sprite.getPosition(), sf::Vector2f(mousePosition),0.5f);
-
-			
+			bullets[i].initialize(Sprite.getPosition(), sf::Vector2f(mousePosition),1.4f);
+			bullets[i].load();
 			fireRateTimer = 0;
+			municao--;
 		}
 		for (size_t i = 0; i < bullets.size(); i++) {
 			//sf::Vector2f direction = enemy.getSSprite().getPosition() - bullets[i].getPosition();//calculate the direction of every single bullet  
@@ -100,7 +125,11 @@ void Player::Update(float deltaTime,Enemy &enemy, sf::Vector2i& mousePosition)
 		//if (maths::CheckRectColision(Sprite.getGlobalBounds(), enemy.getSSprite().getGlobalBounds())) {
 		//	std::cout << "colidion";
 		//}
-	
+		if (municao > 0) {
+			MunitionText.setString(std::to_string(municao));
+			MunitionText.setPosition(Sprite.getPosition());
+		
+		}
 }
 
 sf::Sprite Player::getSSprite()
@@ -108,11 +137,20 @@ sf::Sprite Player::getSSprite()
 	return Sprite;
 }
 
+void Player::setMunition()
+{
+
+	
+}
+
 
 
 
 void Player::Draw(sf::RenderWindow &window)
 {
+	if (municao > 0) {
+		window.draw(MunitionText);
+	}
 	window.draw(Sprite);
 	window.draw(boundingRectangle);
 

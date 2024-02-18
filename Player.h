@@ -2,16 +2,21 @@
 #include <SFML/Graphics.hpp>
 #include "Enemy.h"
 #include "Bullet.h"
+#include <limits>
+
 class Player
 {
 
 private : 	
+	sf::Text  MunitionText;
+	sf::Font font; 
+	float timerMunition;
 	sf::Texture PlayerTexture; 
 	sf::Sprite Sprite;
-	float PlayerSpeed = 2.0f;
-
+	float PlayerSpeed;
+	int municao;
 	std::vector<Bullet> bullets;
-
+	float Inf;
 	float maxFireRate;
 	float fireRateTimer;
 	sf::RectangleShape boundingRectangle;
@@ -24,7 +29,7 @@ public:
 	Player();
 	~Player();
 
-
+	void setMunition();
 	void initialize();//<- called once p App Start
 	void Update(float deltaTime,Enemy& enemy,sf::Vector2i &mousePosition);//<- called once p App start
 	sf::Sprite getSSprite();

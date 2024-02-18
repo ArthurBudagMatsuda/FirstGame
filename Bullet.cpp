@@ -1,7 +1,16 @@
 #include "Bullet.h"
 #include "Maths.h"
+#include <iostream>
 Bullet::Bullet(): speed(0)
 {
+	if (Texture.loadFromFile("assets/player/texture/fireBall.png")) {
+		std::cout << "bullet Texture Loaded.";
+
+
+	}
+	else {
+		std::cout << "Bullet Texture Failed.";
+	}
 }
 
 Bullet::~Bullet()
@@ -11,8 +20,8 @@ Bullet::~Bullet()
 void Bullet::initialize(const sf::Vector2f &position, const sf::Vector2f &target,float speed)
 {
 	this->speed = speed; // this referencia a classe original
-	rectangleShape.setSize(sf::Vector2f(50, 25));
-	rectangleShape.setPosition(position);
+	Sprite.setTexture(Texture);
+	Sprite.setPosition(position);
 	direction =  maths::NormalizeVector( target - position);// se eu calcular a direction uma vez ( no caso eu calculo quando aperto o mause)
 	//entao a bullet vai seguir apenas a ultima posicao do maose , e nao vai ficar seguindo ele constantemente
 }
@@ -20,13 +29,18 @@ void Bullet::initialize(const sf::Vector2f &position, const sf::Vector2f &target
 
 void Bullet::Update(float deltaTime)
 {
-	rectangleShape.setPosition(rectangleShape.getPosition() + direction * speed * deltaTime);
+	Sprite.setPosition(Sprite.getPosition() + direction * speed * deltaTime);
 
 }
 
 
 void Bullet::Draw(sf::RenderWindow& window)
 {
-	window.draw(rectangleShape);
+	window.draw(Sprite);
+}
+
+void Bullet::load()
+{
+
 }
 

@@ -5,7 +5,7 @@
 #include "Player.h"
 #include"Enemy.h"
 #include "FrameText.h";
-
+#include "map.h";
 
 int main() {
 
@@ -21,17 +21,18 @@ int main() {
 
 	FrameText frameRate;
 	frameRate.Initialize();
-
+	Map map;
 	Player Myplayer;
 	Enemy demon;
 	
 	Myplayer.initialize();
 	demon.initialize();
+	map.initialize();
 	///------------------LOAD-----------------
 	Myplayer.Load();
+	map.Load();
 	demon.Load();
 	frameRate.Load();
-
 	///------------------LOAD-----------------
 
 	sf::Time deltaTimeTimer;
@@ -53,11 +54,11 @@ int main() {
 
 			}
 
-
 			
 		}
 		sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
 		demon.Update(deltaTime);
+		map.Update(deltaTime);
 		Myplayer.Update(deltaTime, demon, mousePosition);
 		clock.restart();
 		 deltaTime = deltaTimeTimer.asMilliseconds();
@@ -80,7 +81,7 @@ int main() {
 			demon.Draw(window);
 			frameRate.Draw(window);
 			Myplayer.Draw(window);
-
+			map.Draw(window);
 			//window.draw(playerSprite);//nao pode dar draw em uma texture
 
 			window.display(); // chamando a date q tava no back-bufffer e botando na screenb
