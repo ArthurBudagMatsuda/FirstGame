@@ -12,6 +12,7 @@ private :
 	sf::Font font; 
 	float timerMunition;
 	sf::Texture PlayerTexture; 
+	sf::Texture BulletTexture;
 	sf::Sprite Sprite;
 	float PlayerSpeed;
 	int municao;
@@ -31,7 +32,7 @@ public:
 
 	void setMunition();
 	void initialize();//<- called once p App Start
-	void Update(float deltaTime,Enemy& enemy,sf::Vector2i &mousePosition);//<- called once p App start
+	void Update(double deltaTime,Enemy& enemy,sf::Vector2i &mousePosition);//<- called once p App start
 	sf::Sprite getSSprite();
 	void Load();//<- called once p frame
 	void Draw(sf::RenderWindow &window);//<- called once p frame

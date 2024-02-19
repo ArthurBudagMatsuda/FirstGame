@@ -18,7 +18,7 @@ public:
 	Enemy();
 	~Enemy();
 	void initialize();//<- called once p App Start
-	void Update(float deltaTime);//<- called once p App start
+	void Update(double deltaTime);//<- called once p App start
 	sf::Sprite getSSprite();
 	void Load();//<- called once p frame
 	void Draw(sf::RenderWindow& window);//<- called once p frame

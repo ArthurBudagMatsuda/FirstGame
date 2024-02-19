@@ -14,7 +14,7 @@ int main() {
 	//sf::ContextSettings settings;
 	//settings.antialiasingLevel = 8;
 	//sf::RenderWindow window(sf::VideoMode(800, 600), "RPG GAME",sf::Style::Default, settings);
-	sf::RenderWindow window(sf::VideoMode(1200, 1000), "RPG GAME");
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "RPG GAME",sf::Style::Default);
 	window.setFramerateLimit(120);
 	//sf::RectangleShape bullet(sf::Vector2f(20, 10));
 	//-------------INITIALIZE-----------------

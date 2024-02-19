@@ -27,7 +27,7 @@ void FrameText::Load()
 
 }
 
-void FrameText::Update(float deltaTime)
+void FrameText::Update(double deltaTime)
 {
 	timer += deltaTime;
 	if (timer >= 100.0f) {

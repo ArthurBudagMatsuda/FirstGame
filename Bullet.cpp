@@ -3,21 +3,14 @@
 #include <iostream>
 Bullet::Bullet(): speed(0)
 {
-	if (Texture.loadFromFile("assets/player/texture/fireBall.png")) {
-		std::cout << "bullet Texture Loaded.";
 
-
-	}
-	else {
-		std::cout << "Bullet Texture Failed.";
-	}
 }
 
 Bullet::~Bullet()
 {
 }
 // const significA QUE EU NAO PODEREI ALTERAR O VALOR ORIGINAL QUE NESSE CONTEXTO E A POSICAO DE PLAYER / NAO PODEREI AUTERAR POR OUTRAS CLASSES ETC
-void Bullet::initialize(const sf::Vector2f &position, const sf::Vector2f &target,float speed)
+void Bullet::initialize(const sf::Vector2f &position, const sf::Vector2f &target,float speed, sf::Texture &Texture)
 {
 	this->speed = speed; // this referencia a classe original
 	Sprite.setTexture(Texture);
@@ -27,7 +20,7 @@ void Bullet::initialize(const sf::Vector2f &position, const sf::Vector2f &target
 }
 
 
-void Bullet::Update(float deltaTime)
+void Bullet::Update(double deltaTime)
 {
 	Sprite.setPosition(Sprite.getPosition() + direction * speed * deltaTime);
 

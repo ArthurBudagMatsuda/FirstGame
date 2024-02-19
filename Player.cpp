@@ -54,9 +54,17 @@ void Player::Load() {
 		std::cout << "Font Loaded Failed" << "\n";
 	};
 	
+	if (BulletTexture.loadFromFile("assets/player/texture/fireBall.png")) {
+		std::cout << "bullet Texture Loaded.";
+
+
+	}
+	else {
+		std::cout << "Bullet Texture Failed.";
+	}
 }
 
-void Player::Update(float deltaTime,Enemy &enemy, sf::Vector2i& mousePosition )
+void Player::Update(double deltaTime,Enemy &enemy, sf::Vector2i& mousePosition )
 {
 
 	sf::Vector2f postion = Sprite.getPosition();
@@ -99,7 +107,7 @@ void Player::Update(float deltaTime,Enemy &enemy, sf::Vector2i& mousePosition )
 		
 			bullets.push_back(Bullet());
 			int i = bullets.size() - 1;
-			bullets[i].initialize(Sprite.getPosition(), sf::Vector2f(mousePosition),1.4f);
+			bullets[i].initialize(Sprite.getPosition(), sf::Vector2f(mousePosition),2.0f, BulletTexture);
 			bullets[i].load();
 			fireRateTimer = 0;
 			municao--;
