@@ -143,18 +143,22 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FrameText.cpp" />
     <ClCompile Include="map.cpp" />
+    <ClCompile Include="mapLoader.cpp" />
     <ClCompile Include="Maths.cpp" />
     <ClCompile Include="Origem.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="randomballs.cpp" />
+    <ClCompile Include="sword.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FrameText.h" />
     <ClInclude Include="map.h" />
+    <ClInclude Include="mapLoader.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="sword.h" />
     <ClInclude Include="TexturesLoader.h" />
     <ClInclude Include="tiles.h" />
   </ItemGroup>

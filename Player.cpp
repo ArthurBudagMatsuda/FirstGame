@@ -5,7 +5,7 @@
 #include "Maths.h"
 
 
-Player::Player() :PlayerSpeed(1.0f), maxFireRate(500), fireRateTimer(0), municao(10), timerMunition(Inf), Inf(-69000000.0f)
+Player::Player() :PlayerSpeed(1.0f), maxFireRate(500), fireRateTimer(0), municao(10), timerMunition(Inf), Inf(-69000000.0f), Xtexture(0)
 {
 }
 
@@ -32,10 +32,10 @@ void Player::Load() {
 		std::cout << "Player Texture Loaded.";
 		Sprite.setTexture(PlayerTexture);
 
-		int Xindex = 2;//120
-		int yindex = 2;//100
+		 Xindex = 2;//120
+		 yindex = 2;//100
 		//X,Y,width,height
-		Sprite.setTextureRect(sf::IntRect(Xindex * size.x, yindex * size.y, 120, 100));
+		Sprite.setTextureRect(sf::IntRect( size.x,  size.y, 120, 100));
 		Sprite.setPosition(sf::Vector2f(400, 400));
 	}
 	else {
@@ -64,7 +64,7 @@ void Player::Load() {
 	}
 }
 
-void Player::Update(double deltaTime,Enemy &enemy, sf::Vector2i& mousePosition )
+void Player::Update(float deltaTime,Enemy &enemy, sf::Vector2i& mousePosition )
 {
 
 	sf::Vector2f postion = Sprite.getPosition();
@@ -74,12 +74,20 @@ void Player::Update(double deltaTime,Enemy &enemy, sf::Vector2i& mousePosition )
 
 		//para ajustar o movimento bugado - multiplica a velocidade , pela difenca do frame atual pelo ultimo frame , ou seja frameatual - frameanterior , 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-
+			//Sprite.setTextureRect(sf::IntRect(Xindex * size.x, yindex * size.y, 120, 100));
+			Xtexture = 0;
+			Xtexture = (int)Sprite.getPosition().x / 50 %4;
+			Xtexture = Xtexture * 120;
+			Sprite.setTextureRect(sf::IntRect( Xtexture,  size.y, 120, 100));
 			Sprite.setPosition(postion + sf::Vector2f(1, 0) * PlayerSpeed * deltaTime);
+			
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 
-
+			Xtexture = 0;
+			Xtexture = (int)Sprite.getPosition().x / 50 % 4;
+			Xtexture = Xtexture * 120;
+			Sprite.setTextureRect(sf::IntRect(Xtexture, size.x		, 120, 100));
 			Sprite.setPosition(postion - sf::Vector2f(1, 0) * PlayerSpeed * deltaTime);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
@@ -101,6 +109,10 @@ void Player::Update(double deltaTime,Enemy &enemy, sf::Vector2i& mousePosition )
 			timerMunition = Inf;
 		}
 
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
+			sword.initialize(Sprite.getPosition());
+			//sword.erase no final da animacao
+		}
 
 		fireRateTimer += deltaTime;
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && fireRateTimer >= maxFireRate && municao > 0) {
@@ -161,6 +173,7 @@ void Player::Draw(sf::RenderWindow &window)
 	}
 	window.draw(Sprite);
 	window.draw(boundingRectangle);
+	sword.Draw(window);
 
 	for (size_t i = 0; i < bullets.size(); i++) {
 		bullets[i].Draw(window);

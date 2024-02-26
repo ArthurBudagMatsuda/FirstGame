@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "tiles.h"
+
 class Map
 {
 public:
@@ -12,11 +13,14 @@ public:
 	int tileHeight;
 	int TotalTilesX;
 	int TotalTilesY;
-	int tileIds[6] = {
+	static const int mapSize = 6;
+	int tileIds[mapSize] = {
 		4,4,4,
 		6,6,6
 	};
-	sf::Sprite mapSprites[6];
+	int mapWidht;
+	int mapHeight;
+	sf::Sprite mapSprites[mapSize];
 
 	Map();
 	~Map();

@@ -13,7 +13,7 @@ public:
 	
 	//           position = start position , where the bullet spawn | target = where  the bullet will go , speed = speed of the bullet
 	void initialize(const sf::Vector2f &position, const sf::Vector2f &target,float speed, sf::Texture &Texture);
-	void Update(double deltaTime);
+	void Update(float deltaTime);
 	void Draw(sf::RenderWindow& window);
     void load(); //static?
 	Bullet();

@@ -1,7 +1,7 @@
 #include "Bullet.h"
 #include "Maths.h"
 #include <iostream>
-Bullet::Bullet(): speed(0)
+Bullet::Bullet()
 {
 
 }
@@ -20,7 +20,7 @@ void Bullet::initialize(const sf::Vector2f &position, const sf::Vector2f &target
 }
 
 
-void Bullet::Update(double deltaTime)
+void Bullet::Update(float deltaTime)
 {
 	Sprite.setPosition(Sprite.getPosition() + direction * speed * deltaTime);
 

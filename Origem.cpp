@@ -6,8 +6,18 @@
 #include"Enemy.h"
 #include "FrameText.h";
 #include "map.h";
-
+#include "sword.h"
+#include  "mapLoader.h";
 int main() {
+
+
+
+
+
+
+
+
+
 
 
 	//-------------INITIALIZE-----------------
@@ -20,19 +30,23 @@ int main() {
 	//-------------INITIALIZE-----------------
 
 	FrameText frameRate;
-	frameRate.Initialize();
 	Map map;
 	Player Myplayer;
 	Enemy demon;
-	
+	mapLoader mapLoader;
+
+	mapLoader.load("assets/Maps/level1.vit");
+	frameRate.Initialize();
 	Myplayer.initialize();
 	demon.initialize();
 	map.initialize();
+
 	///------------------LOAD-----------------
 	Myplayer.Load();
 	map.Load();
 	demon.Load();
 	frameRate.Load();
+
 	///------------------LOAD-----------------
 
 	sf::Time deltaTimeTimer;
@@ -60,6 +74,7 @@ int main() {
 		demon.Update(deltaTime);
 		map.Update(deltaTime);
 		Myplayer.Update(deltaTime, demon, mousePosition);
+
 		clock.restart();
 		 deltaTime = deltaTimeTimer.asMilliseconds();
 		frameRate.Update(deltaTime);
@@ -82,6 +97,7 @@ int main() {
 			frameRate.Draw(window);
 			Myplayer.Draw(window);
 			map.Draw(window);
+
 			//window.draw(playerSprite);//nao pode dar draw em uma texture
 
 			window.display(); // chamando a date q tava no back-bufffer e botando na screenb
