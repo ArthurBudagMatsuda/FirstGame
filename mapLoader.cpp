@@ -1,8 +1,10 @@
 #include "mapLoader.h"
 #include <fstream>
 #include <string>
+#include "MapData.h"
 void mapLoader::load(std::string filename)
 {
+	MapData data;
 	std::string line;
 	std::ifstream file(filename);
 	bool mapExist = false;
@@ -22,14 +24,66 @@ void mapLoader::load(std::string filename)
 			}
 			
 
+
 			if (mapExist) {
 				int count = line.find("=");
 				std::string variable = line.substr(0, count);
 				std::string value = line.substr(count +1, line.length() - count);
 
-				std::cout << variable << "\n";
-				std::cout << count << "\n";
-		
+				try
+				{
+
+
+
+					if (variable == "tilesheet") {
+						data.tilesheet = value;
+
+					}
+					else if (variable == "name") {
+						data.name = value;
+
+					}
+					else if (variable == "tileWidth") {
+
+						data.tilewidth = std::stoi(value);
+
+					}
+					else if (variable == "tileHeight") {
+						data.tileheight = std::stoi(value);
+
+					}
+					else if (variable == "scalex") {
+
+						data.scalex = std::stoi(value);
+
+					}
+					else if (variable == "scaley") {
+
+						data.scaley = std::stoi(value);
+
+					}
+
+					else if (variable == "dataSize") {
+
+						data.dataLenght = std::stoi(value);
+
+					}
+
+					else if (variable == "data") {
+						int count = value.find(',');
+						std::string v = value.substr(0, count); 
+						data.data = nullptr;
+						int count2 = value.find(',',4);//o segundo argumento é de onde 
+						v = value.substr(count, count2);
+
+
+					}
+				}
+				catch (const std::exception&)
+				{
+					std::cout << "MapLoader catch failed." << filename << "\n";
+				}
+				
 			}
 		}
 		file.close();

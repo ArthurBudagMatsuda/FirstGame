@@ -1,9 +1,9 @@
 [Map]
 tilesheet = "D:/visualC/Projects/FirstGame/assets/Maps/MapTest.png"
 name = Level 1 
-tile-width=16
-tile-height=16
-scale-x=5
-scale-y=5
-
+tileWidth=16
+tileHeight=16
+scalex=5
+scaley=5
+dataSize=6
 data= 4,4,4,6,6,6
