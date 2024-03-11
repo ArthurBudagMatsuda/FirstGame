@@ -1,7 +1,8 @@
 #include "map.h"
 #include <iostream>
 #include "tiles.h"
-Map::Map() :tileWidht(32), tileHeight(16), TotalTilesX(0), TotalTilesY(0), totalTiles(0),mapWidht(3),mapHeight(2),tiles(nullptr)
+
+Map::Map() : TotalTilesX(0), TotalTilesY(0), totalTiles(0),tiles(nullptr)
 {
 }
 
@@ -15,7 +16,11 @@ void Map::initialize()
 
 void Map::Load()
 {
-	if (TileSheetTexture.loadFromFile("assets/Maps/MapTest.png")) {
+
+	mapLoader.load("assets/Maps/level1.vit", md);
+
+	mapSprites = new sf::Sprite[md.dataLenght];
+	if (TileSheetTexture.loadFromFile(md.tilesheet)) {
 
 
 
@@ -27,8 +32,8 @@ void Map::Load()
 
 
 
-		TotalTilesX = TileSheetTexture.getSize().x / tileWidht;
-		TotalTilesY = TileSheetTexture.getSize().y / tileHeight;
+		TotalTilesX = TileSheetTexture.getSize().x / md.tilewidth;
+		TotalTilesY = TileSheetTexture.getSize().y / md.tileheight;
 
 		std::cout << TotalTilesX;
 		std::cout << TotalTilesY;
@@ -41,7 +46,7 @@ void Map::Load()
 			{
 				int i = x + y * TotalTilesX;
 				tiles[i].id = i;
-				tiles[i].position = sf::Vector2i(x * tileWidht, y * tileHeight); // rect to cortando o mapa para   a parte especifica
+				tiles[i].position = sf::Vector2i(x * md.tilewidth, y * md.tileheight); // rect to cortando o mapa para   a parte especifica
 
 				//tiles[i].texture = &TileSheetTexture;
 				//tiles[i].sprite.setTexture(TileSheetTexture);
@@ -59,21 +64,21 @@ void Map::Load()
 		std::cout << "Map Texture Failed.";
 	}
 
-	for (int y = 0; y < mapHeight; y++) // drawing a specific part
+	for (int y = 0; y < md.mapHeight; y++) // drawing a specific part
 
 	{
-		for (int x = 0; x < mapWidht; x++)
+		for (int x = 0; x < md.mapWidht; x++)
 		{
-			int i = x + y * mapWidht;
-			int index = tileIds[i];
+			int i = x + y * md.mapWidht;
+			int index = md.data[i];
 			mapSprites[i].setTexture(TileSheetTexture);//*tiles eu to desreferenciando
 			//mapSprites[i].setTexture(*tiles[index].texture);//*tiles eu to desreferenciando
 			mapSprites[i].setTextureRect(sf::IntRect(tiles[index].position.x,
 				tiles[index].position.y,
-				tileWidht,
-				tileHeight));
+				md.tilewidth,
+				md.tileheight));
 
-			mapSprites[i].setPosition(sf::Vector2f(x * tileWidht * mapSprites[i].getScale().x, y * tileHeight * mapSprites[i].getScale().y));
+			mapSprites[i].setPosition(sf::Vector2f(x * md.tilewidth * mapSprites[i].getScale().x, y * md.tileheight * mapSprites[i].getScale().y));
 		}
 
 	}
@@ -91,7 +96,7 @@ sf::Sprite Map::getSSprite()
 
 void Map::Draw(sf::RenderWindow& window)
 {
-	for (size_t i = 0; i < mapSize; i++)
+	for (size_t i = 0; i < md.dataLenght; i++)
 	{
 		window.draw(mapSprites[i]);
 

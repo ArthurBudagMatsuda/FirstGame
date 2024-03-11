@@ -1,15 +1,14 @@
 #include "mapLoader.h"
 #include <fstream>
 #include <string>
-#include "MapData.h"
-void mapLoader::load(std::string filename)
+void mapLoader::load(std::string filename ,MapData &data)
 {
-	MapData data;
+
 	std::string line;
 	std::ifstream file(filename);
 	bool mapExist = false;
 	if (file.is_open()) {
-		while (std::getline(file,line))
+			while (std::getline(file,line))
 		{
 			if (!mapExist) {
 				if (line == "[Map]")
@@ -30,17 +29,32 @@ void mapLoader::load(std::string filename)
 				std::string variable = line.substr(0, count);
 				std::string value = line.substr(count +1, line.length() - count);
 
+				std::cout << value << "\n";
+				std::cout << variable << "\n";
+
 				try
 				{
 
 
-
+					if (variable == "version") {
+						data.version = std::stoi(value);
+					}
 					if (variable == "tilesheet") {
 						data.tilesheet = value;
 
 					}
 					else if (variable == "name") {
 						data.name = value;
+
+					}
+					else if (variable == "mapWidth") {
+
+						data.mapWidht = std::stoi(value);
+
+					}
+					else if (variable == "mapHeight") {
+
+						data.mapHeight = std::stoi(value);
 
 					}
 					else if (variable == "tileWidth") {
@@ -70,12 +84,26 @@ void mapLoader::load(std::string filename)
 					}
 
 					else if (variable == "data") {
-						int count = value.find(',');
-						std::string v = value.substr(0, count); 
-						data.data = nullptr;
-						int count2 = value.find(',',4);//o segundo argumento é de onde 
-						v = value.substr(count, count2);
 
+						data.data = new int[data.dataLenght]; // lembrar de deletar
+						int offset = 0;
+						int i = 0;
+						while (true)
+						{
+
+							int count = value.find(',', offset);
+							std::string mapindex = value.substr(offset, count - offset);
+							data.data[i] = std::stoi(mapindex);
+
+							if (count == -1 )
+								break;
+							offset = count + 1;
+							i++;
+						}
+						
+
+
+					
 
 					}
 				}
@@ -90,7 +118,9 @@ void mapLoader::load(std::string filename)
 	}
 	else {
 		std::cout << "unable to open: " << filename << "\n";
+		
 	}
+	
 }
 
 void mapLoader::Save(std::string filename)

@@ -33,9 +33,7 @@ int main() {
 	Map map;
 	Player Myplayer;
 	Enemy demon;
-	mapLoader mapLoader;
 
-	mapLoader.load("assets/Maps/level1.vit");
 	frameRate.Initialize();
 	Myplayer.initialize();
 	demon.initialize();

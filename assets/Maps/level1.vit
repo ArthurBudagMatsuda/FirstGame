@@ -1,9 +1,12 @@
 [Map]
-tilesheet = "D:/visualC/Projects/FirstGame/assets/Maps/MapTest.png"
-name = Level 1 
-tileWidth=16
+version= 1
+tilesheet=D:/visualC/Projects/FirstGame/assets/Maps/MapTest.png
+name=Level 1 
+mapWidth=3
+mapHeight=2
+tileWidth=32
 tileHeight=16
 scalex=5
 scaley=5
 dataSize=6
-data= 4,4,4,6,6,6
+data=4, 4, 4, 6, 6, 6
